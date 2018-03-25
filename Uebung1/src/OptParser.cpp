@@ -1,5 +1,4 @@
 #include "../include/OptParser.h"
-#include <stdio.h>
 #include <string.h>
 
 bool CmdLineOptParser::Parse(int argc, char* argv[] )
@@ -52,8 +51,6 @@ bool CmdLineOptParser::Parse(int argc, char* argv[] )
 
 bool CmdLineOptParser::Option(const char c, const char* info)
 {
-    printf("Char: %c\n",c);
-    printf("Chars: %s\n",info);
-    printf(" bool %d \n",info[0] ==0);
-    return true;
+    if(info[0]==0 && c >0)return true;
+    return false;
 }
