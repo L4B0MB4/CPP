@@ -1,7 +1,4 @@
-#include <stdio.h>
 #include "../include/OptParser.h"
-
-using namespace std;
 
 int main(int argp, char** args)
 {
