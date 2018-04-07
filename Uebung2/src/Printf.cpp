@@ -62,44 +62,48 @@ void getString(char type, void* param, char* buffer)
 {
     switch(type)
     {
-        case 'd': sprintf(buffer,"%d",param);break;;
-        case 'u': sprintf(buffer,"%u",param);break;
+        case 'd': sprintf(buffer,"%d",param);break;
         case 'x': sprintf(buffer,"0x%x",param);break;
         case 's': sprintf(buffer,"%s",param);break;
         case 'b': 
-        printf("hier");
-       int  n =  *reinterpret_cast<int*>(&param); // wieso brauch ich erst die adresse von param?
-        printf("%d",n);
-        buffer[0]='0';
-        buffer[1]='b';
-        int i=0;
-        int umkehren=0;
-        if(n>=0)
-        {
-            while (n) {
-            if (n & 1)
-                buffer[i+2]='1';
-            else
-                buffer[i+2]='0';
-            ++i;
-            n >>= 1;
-            }
-        buffer[i+1]=0;
-        }
-        else if(n<0) // alles rückwärts
-        {
-            umkehren= 64;//64 bit zahlen
-            umkehren +=2;
-            while (n&& i <= umkehren-2) {
+        { 
+            int  n =  *reinterpret_cast<int*>(&param); // wieso brauch ich erst die adresse von param?
+            buffer[0]='0';
+            buffer[1]='b';
+            int i=0;
+            int umkehren=0;
+            if(n>=0)
+            {
+                while (n) {
                 if (n & 1)
-                    buffer[umkehren-i]='1';
+                    buffer[i+2]='1';
                 else
-                    buffer[umkehren-i]='0';
+                    buffer[i+2]='0';
                 ++i;
                 n >>= 1;
+                }
+            buffer[i+1]=0;
             }
-            buffer[umkehren+1]=0;
+            else if(n<0) // alles rückwärts
+            {
+                umkehren= 64;//64 bit zahlen
+                umkehren +=2;
+                while (n&& i <= umkehren-2) {
+                    if (n & 1)
+                        buffer[umkehren-i]='1';
+                    else
+                        buffer[umkehren-i]='0';
+                    ++i;
+                    n >>= 1;
+                }
+                buffer[umkehren+1]=0;
+            }
         }
+        break;
+        case 'u':
+            int  n =  *reinterpret_cast<int*>(&param);
+            unsigned int  nn =  static_cast<unsigned int>(n);
+            sprintf(buffer,"%u",nn);
         break;
     }
 }
