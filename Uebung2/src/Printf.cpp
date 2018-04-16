@@ -39,7 +39,7 @@ char* Printf(char* dst, const void* end, const char* fmt,...)
             if(fmt[i+coffset] == '%' && fmt[i+1+coffset] != '%') // is %X and not %%
             {
                 val = va_arg(vl,char *); // read next argument
-                getString(fmt[i+1+coffset],val,buffer); // buffer gets filled out with argument value (formatted)
+                getString(fmt[i+1+coffset],val,buffer,bufferlength); // buffer gets filled out with argument value (formatted)
                 for(int j=0;j<bufferlength;j++)
                 {
                     if(buffer[j]==0) // 0-terminator ? ->break
@@ -65,33 +65,32 @@ char* Printf(char* dst, const void* end, const char* fmt,...)
     return &(dst[i+offset]); // return next writeable char
 }
 
-void getString(char type, void* param, char* buffer)
+void getString(char type, void* param, char* buffer, const int buffermaxlen)
 {
     switch(type)
     {
-        case 'c': sprintf(buffer,"%c",param);break; // using sprintf to convert argument value into formatted value
-        case 'd': sprintf(buffer,"%d",param);break;
-        case 'x': sprintf(buffer,"0x%x",param);break;
+        case 'c': snprintf(buffer,buffermaxlen,"%c",param);break; // using snprintf to convert argument value into formatted value
+        case 'd': snprintf(buffer,buffermaxlen,"%d",param);break;
+        case 'x': snprintf(buffer,buffermaxlen,"0x%x",param);break;
         case 's': 
         {
             char*  n =  reinterpret_cast<char*>(&param);
             int length =std::char_traits<char>::length(n);
-            printf("lenght %d\n",length);break;
-            if(length==1) // if length ==1 interpret it as a char
+            if(n[1]<0) // if length ==1 interpret it as a char
             {
-                sprintf(buffer,"%c",param);
+                snprintf(buffer,buffermaxlen,"%c",n[0]);
             }
             else if(length>1){
-                sprintf(buffer,"%s",param);
+                snprintf(buffer,buffermaxlen,"%s",n);
             }
             break;
         }
-        case 'b': decimalToBinary(param,buffer); break; // own impl
-        case 'u':sprintf(buffer,"%u",param);break;
+        case 'b': decimalToBinary(param,buffer, buffermaxlen); break; // own impl
+        case 'u':snprintf(buffer,buffermaxlen,"%u",param);break;
     }
 }
 
-void decimalToBinary(void* param, char* buffer)
+void decimalToBinary(void* param, char* buffer, const int buffermaxlen)
 {
     int  n =  *reinterpret_cast<int*>(&param); // why is adress of param needed to cast?
     buffer[0]='0';
@@ -100,7 +99,7 @@ void decimalToBinary(void* param, char* buffer)
     int umkehren=0;
     if(n>=0) // if positiv shift int right and write from left to right
     {
-        while (n) {
+        while (n && i-2 <buffermaxlen) {
         if (n & 1)
             buffer[i+2]='1';
         else
@@ -110,7 +109,7 @@ void decimalToBinary(void* param, char* buffer)
         }
     buffer[i+1]=0;
     }
-    else if(n<0) // if negtive shift int right and write from right to left
+    else if(n<0 &&i <buffermaxlen) // if negtive shift int right and write from right to left
     {
         umkehren= 64;//64 bit number
         umkehren +=2; // +2 -> not overwrite "0b"
