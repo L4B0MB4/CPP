@@ -6,10 +6,13 @@
 
 char* Printf(char* dst, const void* end, const char* fmt,...)
 {
-    // to int 
-    const int* iEnd =reinterpret_cast<const int*>(end);
+    if(dst==nullptr || end==nullptr || fmt==nullptr ||dst==NULL || end==NULL|| fmt==NULL)return nullptr;
+    const char* iPEnd =reinterpret_cast<const char*>(end);
+    const char* iPDest =reinterpret_cast<const char*>(dst);
     // clear buffer
-    for(int i =0; i<(*iEnd);i++)
+    int iEnd = iPEnd-iPDest;
+    // clear buffer
+    for(int i =0; i<(iEnd);i++)
     {
         dst[i]=0;
     }
@@ -21,13 +24,13 @@ char* Printf(char* dst, const void* end, const char* fmt,...)
     va_start(vl,fmt);
 
     //buffer for arguments
-    int bufferlength =*iEnd;
+    int bufferlength =iEnd;
     char buffer[bufferlength];
     //offset for dest and fmt. Needed for replacement of %X 
     int offset=0;
     int coffset=0;
     int i;
-    for( i=0; i<length && (i+offset+1)<(*iEnd);++i){
+    for( i=0; i<length && (i+offset+1)<(iEnd);++i){
         //write each char of fmt into dst
         dst[i+offset] = fmt[i+coffset];
         if(fmt[i+coffset]==0) //if fmt has 0-terminator ->break
@@ -67,6 +70,7 @@ char* Printf(char* dst, const void* end, const char* fmt,...)
 
 void getString(char type, void* param, char* buffer, const int buffermaxlen)
 {
+    if(param==nullptr || param == NULL)return;
     switch(type)
     {
         case 'c': snprintf(buffer,buffermaxlen,"%c",param);break; // using snprintf to convert argument value into formatted value
