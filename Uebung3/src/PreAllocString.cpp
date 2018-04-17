@@ -114,17 +114,18 @@
         currentLen=0;
     }
 
+        void PreAllocString::AddFormat(const char* format,...)
+        {
+            printf("Formatting...\n %s",format);
+        }
+        void PreAllocString::AddWhiteSpace()
+        {
+            printf("Adding Whitespace...\n");
+            if(currentLen+1<maxlLen)
+            {
+                buffer[currentLen]=' ';
+                buffer[currentLen+1]=0;
+                currentLen++;
+            }
+        }
 
-        /*
-        operator const char*() const;
-        operator const void*() const;
-        const char & operator [] (const int idx);
-        size_t GetLength() const;
-        constexpr size_t SizeOf();
-        void Empty();
-        PreAllocString& operator =(char rhs);
-        PreAllocString& operator =(const char* rhs);
-        PreAllocString& operator =(char *const rhs);
-
-        PreAllocString& operator +=(char rhs);
-        PreAllocString& operator +=(char *const rhs);*/

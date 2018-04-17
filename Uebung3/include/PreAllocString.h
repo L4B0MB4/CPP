@@ -15,7 +15,7 @@ class PreAllocString{
             currentLen=0;
         }
         ~PreAllocString(){
-            printf("%s \n",buffer);
+            printf("destroying %s\n",buffer);
         }
         operator const char*() const;
         operator const void*() const;
@@ -33,4 +33,7 @@ class PreAllocString{
 
         PreAllocString& operator +=(char rhs);
         PreAllocString& operator +=(char *const rhs);
+
+        void AddFormat(const char* format,...);
+        void AddWhiteSpace();
 };

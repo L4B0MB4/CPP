@@ -30,6 +30,7 @@ int main(int argp, char** args)
     printf("%s \n",static_cast<const char*>(p));
     printf("%s \n",static_cast<const void*>(p));
     p+=a;
+    p.AddWhiteSpace();
     printf("%s \n",static_cast<const char*>(p));
     char bada[5] ="test";
     p+=bada;
