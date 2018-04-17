@@ -4,7 +4,7 @@
 #include <iostream>
 
 
-char* Printf(char* dst, const void* end, const char* fmt,...)
+char* Printf(char* dst, const void* end, const char* fmt,va_list vl)
 {
     if(dst==nullptr || end==nullptr || fmt==nullptr ||dst==NULL || end==NULL|| fmt==NULL)return nullptr;
     const char* iPEnd =reinterpret_cast<const char*>(end);
@@ -20,9 +20,6 @@ char* Printf(char* dst, const void* end, const char* fmt,...)
     int length =std::char_traits<char>::length(fmt);
     //setup variable arg-list
     char*  val;
-    va_list vl;
-    va_start(vl,fmt);
-
     //buffer for arguments
     int bufferlength =iEnd;
     char buffer[bufferlength];
@@ -78,17 +75,7 @@ void getString(char type, void* param, char* buffer, const int buffermaxlen)
         case 'x': snprintf(buffer,buffermaxlen,"0x%x",param);break;
         case 's': 
         {
-            char*  n =  reinterpret_cast<char*>(&param);
-            int length =std::char_traits<char>::length(n);
-            printf("%d",n[1]);
-            if(n[1]<0) // if length ==1 interpret it as a char
-            {
-                snprintf(buffer,buffermaxlen,"%c",n[0]);
-            }
-            else if(length>1){
-                snprintf(buffer,buffermaxlen,"%s",param);
-            }
-            break;
+                snprintf(buffer,buffermaxlen,"%s",param);break;
         }
         case 'b': decimalToBinary(param,buffer, buffermaxlen); break; // own impl
         case 'u':snprintf(buffer,buffermaxlen,"%u",param);break;

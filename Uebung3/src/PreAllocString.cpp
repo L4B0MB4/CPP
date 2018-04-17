@@ -1,5 +1,6 @@
 #include "../include/PreAllocString.h"
-
+#include "../include/Printf.h"
+#include <stdarg.h>
 
     PreAllocString::operator const char*() const{
         printf("char cast\n");
@@ -116,7 +117,12 @@
 
         void PreAllocString::AddFormat(const char* format,...)
         {
-            printf("Formatting...\n %s",format);
+            printf("Formatting...\n%s",format);
+            va_list args;
+            va_start(args, format);
+            char* x = Printf(buffer+currentLen,buffer+maxlLen,format,args);
+            va_end(args);
+            currentLen = x-buffer;
         }
         void PreAllocString::AddWhiteSpace()
         {

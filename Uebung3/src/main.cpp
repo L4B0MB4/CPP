@@ -35,5 +35,9 @@ int main(int argp, char** args)
     char bada[5] ="test";
     p+=bada;
     printf("%s \n",static_cast<const char*>(p));
+
+    p.AddFormat("tryyyy%sing\n","asasd");
+    printf("%s \n",static_cast<const char*>(p));
+
     return 0;
 }
