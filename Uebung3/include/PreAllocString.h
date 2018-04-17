@@ -37,3 +37,8 @@ class PreAllocString{
         void AddFormat(const char* format,...);
         void AddWhiteSpace();
 };
+
+#define CREATE(varName,size) \
+    char buffer_varName[size];\
+    PreAllocString varName(buffer_varName,buffer_varName+size-1) 
+    

@@ -8,14 +8,8 @@ int main(int argp, char** args)
     printf("%s\n",args[0]);
     int len =100;
     char buffer[len];
-    buffer[0] ='H';
-    buffer[1] ='A';
-    buffer[2] ='L';
-    buffer[3] ='L';
-    buffer[4] ='O';
-    buffer[5] =0;
     PreAllocString p(buffer, buffer+len-1);
-
+    
     p="was geht";
     printf("%d\n",p.GetLength());
     printf("%d\n",p.SizeOf());
@@ -23,7 +17,7 @@ int main(int argp, char** args)
     p = &a;
     printf("%d\n",p.GetLength());
     printf("%d\n",p.SizeOf());
-    const char* x= "tadaaaaaaaaaaaaaaaaaaa";
+    char x[30]= "tadaaaaaaaaaaaaaaaaaaa";
     p=x;
     printf("%d\n",p.GetLength());
     printf("%d\n",p.SizeOf());
@@ -39,5 +33,9 @@ int main(int argp, char** args)
     p.AddFormat("tryyyy%sing\n","asasd");
     printf("%s \n",static_cast<const char*>(p));
 
+    printf("\n");
+    CREATE(name,100);
+    char b[10] ="was geht";
+    name+=b;
     return 0;
 }

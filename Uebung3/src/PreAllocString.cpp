@@ -4,6 +4,7 @@
 
     PreAllocString::operator const char*() const{
         printf("char cast\n");
+        printf("%s\n",buffer);
         return buffer;
     }
 
@@ -51,7 +52,7 @@
 
     PreAllocString& PreAllocString::operator =(const char* rhs)
     {
-        printf("is string \n");
+        printf("is string %s \n",rhs);
         unsigned int i=0;
         for(i=0;i<maxlLen;i++)
         {
@@ -59,6 +60,7 @@
             if(rhs[i]==0)break; 
         }
         currentLen=i;
+        printf("%s\n",buffer);
         return (*this);
     }
 
@@ -76,8 +78,9 @@
                     buffer[i]=0;
                 }
             }
-            currentLen=i;
+            currentLen=0;
         }
+        printf("%s\n",buffer);
         return (*this);
     }
 
