@@ -32,13 +32,13 @@ class PreAllocString{
         PreAllocString& operator =(char *const rhs);
 
         PreAllocString& operator +=(char rhs);
-        PreAllocString& operator +=(char *const rhs);
+        PreAllocString& operator +=(char const* rhs);
 
         void AddFormat(const char* format,...);
         void AddWhiteSpace();
 };
 
 #define CREATE(varName,size) \
-    char buffer_varName[size];\
-    PreAllocString varName(buffer_varName,buffer_varName+size-1) 
+    char buffer_##varName[size];\
+    PreAllocString varName(buffer_##varName,buffer_##varName+size-1) 
     

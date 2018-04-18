@@ -11,7 +11,8 @@ int main(int argp, char** args)
     PreAllocString p(buffer, buffer+len-1);
     
     p="was geht";
-    printf("%d\n",p.GetLength());
+    p+="hallo";
+    /*printf("%d\n",p.GetLength());
     printf("%d\n",p.SizeOf());
     char a ='y';
     p = &a;
@@ -32,10 +33,13 @@ int main(int argp, char** args)
 
     p.AddFormat("tryyyy%sing\n","asasd");
     printf("%s \n",static_cast<const char*>(p));
-
+*/
     printf("\n");
     CREATE(name,100);
     char b[10] ="was geht";
     name+=b;
+    printf("\n");
+    CREATE(namex,100);
+    namex+=b;
     return 0;
 }

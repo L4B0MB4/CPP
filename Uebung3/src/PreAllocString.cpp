@@ -96,7 +96,7 @@
         return (*this);
     }
 
-    PreAllocString& PreAllocString::operator +=(char *const rhs)
+    PreAllocString& PreAllocString::operator +=(char const* rhs)
     {
         printf("+= string %s",rhs);
         unsigned int i=0;
