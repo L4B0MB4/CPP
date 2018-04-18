@@ -15,7 +15,7 @@ class PreAllocString{
             currentLen=0;
         }
         ~PreAllocString(){
-            printf("destroying %s\n",buffer);
+            //printf("destroying %s\n",buffer);
         }
         operator const char*() const;
         operator const void*() const;
@@ -23,7 +23,7 @@ class PreAllocString{
         size_t GetLength() const;
         constexpr size_t SizeOf()
         {
-            printf("max len \n");
+            //printf("max len \n");
             return maxlLen;
         }
         void Empty();

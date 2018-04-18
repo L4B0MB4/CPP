@@ -3,26 +3,26 @@
 #include <stdarg.h>
 
     PreAllocString::operator const char*() const{
-        printf("char cast\n");
-        printf("%s\n",buffer);
+        //printf("char cast\n");
+        //printf("%s\n",buffer);
         return buffer;
     }
 
     PreAllocString::operator const void*() const{
-        printf("void cast\n");
+        //printf("void cast\n");
         return reinterpret_cast<void *>(buffer);
     }
 
     size_t PreAllocString::GetLength() const
     {
-        printf("curr len \n");
+        //printf("curr len \n");
         return currentLen;
     }
 
 
     const char & PreAllocString::operator [] (const int idx)
     {
-        printf("char at\n");
+        //printf("char at\n");
         unsigned int id  = static_cast<unsigned int>(idx);
         if(id<=maxlLen)
         {
@@ -33,7 +33,7 @@
     
     PreAllocString& PreAllocString::operator =(char rhs)
     {
-        printf("is char \n");
+        //printf("is char \n");
         if(maxlLen>0)
         {
             buffer[0]=rhs;
@@ -52,7 +52,7 @@
 
     PreAllocString& PreAllocString::operator =(const char* rhs)
     {
-        printf("is string %s \n",rhs);
+        //printf("is string %s \n",rhs);
         unsigned int i=0;
         for(i=0;i<maxlLen;i++)
         {
@@ -60,13 +60,13 @@
             if(rhs[i]==0)break; 
         }
         currentLen=i;
-        printf("%s\n",buffer);
+        //printf("%s\n",buffer);
         return (*this);
     }
 
     PreAllocString& PreAllocString::operator =(char *const rhs)
     {
-        printf(" is char pointer \n");
+        //printf(" is char pointer \n");
         if(maxlLen>0)
         {
             buffer[0]=*rhs;
@@ -80,13 +80,13 @@
             }
             currentLen=0;
         }
-        printf("%s\n",buffer);
+        //printf("%s\n",buffer);
         return (*this);
     }
 
     PreAllocString& PreAllocString::operator +=(char rhs)
     {
-        printf("+= char %c",rhs);
+        //printf("+= char %c",rhs);
         if(currentLen+1<maxlLen)
         {
             buffer[currentLen]=rhs;
@@ -98,7 +98,7 @@
 
     PreAllocString& PreAllocString::operator +=(char const* rhs)
     {
-        printf("+= string %s",rhs);
+        //printf("+= string %s",rhs);
         unsigned int i=0;
         for(i=0;i+currentLen<maxlLen;i++)
         {
@@ -120,7 +120,7 @@
 
         void PreAllocString::AddFormat(const char* format,...)
         {
-            printf("Formatting...\n%s",format);
+            //printf("Formatting...\n%s",format);
             va_list args;
             va_start(args, format);
             char* x = Printf(buffer+currentLen,buffer+maxlLen,format,args);
@@ -129,7 +129,7 @@
         }
         void PreAllocString::AddWhiteSpace()
         {
-            printf("Adding Whitespace...\n");
+            //printf("Adding Whitespace...\n");
             if(currentLen+1<maxlLen)
             {
                 buffer[currentLen]=' ';
