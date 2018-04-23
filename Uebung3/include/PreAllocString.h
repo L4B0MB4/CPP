@@ -10,7 +10,7 @@ class PreAllocString{
     public:
 
         PreAllocString(char* s, char* end){ // set variables
-        if(s==nullptr || end == nullptr)return;
+        if(s==nullptr || end == nullptr || s>=end)return;
             buffer = s;
             maxlLen = end-s;
             currentLen=0;
