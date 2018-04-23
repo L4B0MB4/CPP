@@ -15,18 +15,16 @@ class PreAllocString{
             maxlLen = end-s;
             currentLen=0;
         }
-        ~PreAllocString(){
-            //do nothing
-        }
+        ~PreAllocString() =default;
         operator const char*() const;
         operator const void*() const;
         const char & operator [] (const int idx);
         size_t GetLength() const;
-        /*constexpr size_t SizeOf()
+        constexpr size_t SizeOf()
         {
             //printf("max len \n");
             return maxlLen;
-        }*/
+        }
         void Empty();
         PreAllocString& operator =(char rhs);
         PreAllocString& operator =(const char* rhs);

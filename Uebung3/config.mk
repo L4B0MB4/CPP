@@ -1,5 +1,5 @@
 # Don't change!!!
-CXX         =g++
+CXX         =g++-7
 UTCXXFLAGS  =-Werror -Wall -Wextra -Wno-format -Wold-style-cast -std=c++1z
 CXXFLAGS    = $(UTCXXFLAGS) -fno-exceptions -fno-rtti
 OUTPUT      =bin
