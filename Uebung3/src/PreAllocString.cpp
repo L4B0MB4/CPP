@@ -47,6 +47,7 @@
     PreAllocString& PreAllocString::operator =(const char* rhs)
     {
         //printf("is string %s \n",rhs);
+        if(!rhs)return (*this);
         unsigned int i=0;
         for(i=0;i<maxlLen;i++)
         {
@@ -60,7 +61,7 @@
 
     PreAllocString& PreAllocString::operator =(char *const rhs)
     {
-        if(maxlLen>0)
+        if(maxlLen>0 && rhs)
         {
            unsigned int i=0;
             for(i=0;i<maxlLen;i++)
