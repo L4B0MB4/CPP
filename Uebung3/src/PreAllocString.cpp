@@ -19,11 +19,11 @@
     const char & PreAllocString::operator [] (const int idx)
     {
         unsigned int id  = static_cast<unsigned int>(idx);
-        if(id<=maxlLen)
+        if(id<=maxlLen) 
         {
             return buffer[id];
         }
-        return buffer[maxlLen];
+        return buffer[0];
     }
     
     PreAllocString& PreAllocString::operator =(char rhs)
@@ -34,6 +34,7 @@
             unsigned int i =0;
             if(maxlLen>1)
             {
+                //i+1->0
                 for(i=1;i<maxlLen;i++)
                 {
                     buffer[i]=0;
@@ -41,13 +42,13 @@
             }
             currentLen=i;
         }
-        return (*this);
+        return *this;
     }
 
     PreAllocString& PreAllocString::operator =(const char* rhs)
     {
         //printf("is string %s \n",rhs);
-        if(!rhs)return (*this);
+        if(!rhs)return *this;
         unsigned int i=0;
         for(i=0;i<maxlLen;i++)
         {
@@ -56,12 +57,12 @@
         }
         currentLen=i;
         //printf("%s\n",buffer);
-        return (*this);
+        return *this;
     }
 
     PreAllocString& PreAllocString::operator =(char *const rhs)
     {
-        if(!rhs)return (*this);
+        if(!rhs)return *this;
         if(maxlLen>0 && rhs)
         {
            unsigned int i=0;
@@ -72,7 +73,7 @@
             }
             currentLen=i;
         }
-        return (*this);
+        return *this;
     }
 
     PreAllocString& PreAllocString::operator +=(char rhs)
@@ -84,13 +85,13 @@
             buffer[currentLen+1]=0;
         }
         ++currentLen;
-        return (*this);
+        return *this;
     }
 
     PreAllocString& PreAllocString::operator +=(char const* rhs)
     {
         //printf("+= string %s",rhs);
-        if(!rhs)return(*this);
+        if(!rhs)return*this;
         unsigned int i=0;
         for(i=0;i+currentLen<maxlLen;i++)
         {
@@ -98,15 +99,12 @@
             if(rhs[i]==0)break;
         }
         currentLen+=i;
-        return (*this);
+        return *this;
     }
 
     void PreAllocString::Empty()
     {
-        if(maxlLen>0)
-        {
-            buffer[0]=0;
-        }
+        buffer[0]=0;
         currentLen=0;
     }
 
