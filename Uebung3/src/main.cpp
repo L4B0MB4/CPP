@@ -18,6 +18,7 @@ int main(int argp, char** args)
     printf("daaa %d\n",p.GetLength());
     char x[30]= "tadaaaaaaaaaaaaaaaaaaa";
     p=x;
+    p.Empty();
     printf("hiiier %d\n",p.GetLength());
     p="hallo maaaan";
     printf("%s \n",static_cast<const char*>(p));

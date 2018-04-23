@@ -101,9 +101,9 @@
 
     void PreAllocString::Empty()
     {
-        for(unsigned int i=0;i<maxlLen;i++)
+        if(maxlLen>0)
         {
-            buffer[i]=0;
+            buffer[0]=0;
         }
         currentLen=0;
     }
