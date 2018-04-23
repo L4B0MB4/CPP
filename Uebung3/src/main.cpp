@@ -12,18 +12,17 @@ int main(int argp, char** args)
     
     p="was geht";
     p+="hallo";
-    /*printf("%d\n",p.GetLength());
-    printf("%d\n",p.SizeOf());
+    printf("%d\n",p.GetLength());
     char a ='y';
     p = &a;
-    printf("%d\n",p.GetLength());
-    printf("%d\n",p.SizeOf());
+    printf("daaa %d\n",p.GetLength());
     char x[30]= "tadaaaaaaaaaaaaaaaaaaa";
     p=x;
-    printf("%d\n",p.GetLength());
-    printf("%d\n",p.SizeOf());
+    printf("hiiier %d\n",p.GetLength());
+    p="hallo maaaan";
     printf("%s \n",static_cast<const char*>(p));
-    printf("%s \n",static_cast<const void*>(p));
+    p.AddFormat("test %s test","haha");
+    printf("%s void pointer \n",static_cast<const void*>(p));
     p+=a;
     p.AddWhiteSpace();
     printf("%s \n",static_cast<const char*>(p));
@@ -33,7 +32,7 @@ int main(int argp, char** args)
 
     p.AddFormat("tryyyy%sing\n","asasd");
     printf("%s \n",static_cast<const char*>(p));
-*/
+
     printf("\n");
     CREATE(name,100);
     char b[10] ="was geht";
@@ -41,5 +40,7 @@ int main(int argp, char** args)
     printf("\n");
     CREATE(namex,100);
     namex+=b;
+    namex="trololo";
+    printf("%s\n",namex);
     return 0;
 }

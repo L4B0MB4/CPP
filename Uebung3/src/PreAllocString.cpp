@@ -3,26 +3,21 @@
 #include <stdarg.h>
 
     PreAllocString::operator const char*() const{
-        //printf("char cast\n");
-        //printf("%s\n",buffer);
         return buffer;
     }
 
     PreAllocString::operator const void*() const{
-        //printf("void cast\n");
         return reinterpret_cast<void *>(buffer);
     }
 
     size_t PreAllocString::GetLength() const
     {
-        //printf("curr len \n");
         return currentLen;
     }
 
 
     const char & PreAllocString::operator [] (const int idx)
     {
-        //printf("char at\n");
         unsigned int id  = static_cast<unsigned int>(idx);
         if(id<=maxlLen)
         {
@@ -33,7 +28,6 @@
     
     PreAllocString& PreAllocString::operator =(char rhs)
     {
-        //printf("is char \n");
         if(maxlLen>0)
         {
             buffer[0]=rhs;
@@ -66,21 +60,16 @@
 
     PreAllocString& PreAllocString::operator =(char *const rhs)
     {
-        //printf(" is char pointer \n");
         if(maxlLen>0)
         {
-            buffer[0]=*rhs;
-            unsigned int i =0;
-            if(maxlLen>1)
+           unsigned int i=0;
+            for(i=0;i<maxlLen;i++)
             {
-                for(i=1;i<maxlLen;i++)
-                {
-                    buffer[i]=0;
-                }
+                buffer[i]=rhs[i];
+                if(rhs[i]==0)break; 
             }
-            currentLen=0;
+            currentLen=i;
         }
-        //printf("%s\n",buffer);
         return (*this);
     }
 
@@ -118,23 +107,23 @@
         currentLen=0;
     }
 
-        void PreAllocString::AddFormat(const char* format,...)
+    void PreAllocString::AddFormat(const char* format,...)
+    {
+        //printf("Formatting...\n%s",format);
+        va_list args;
+        va_start(args, format);
+        char* x = Printf(buffer+currentLen,buffer+maxlLen,format,args);
+        va_end(args);
+        currentLen = x-buffer;
+    }
+    void PreAllocString::AddWhiteSpace()
+    {
+        //printf("Adding Whitespace...\n");
+        if(currentLen+1<maxlLen)
         {
-            //printf("Formatting...\n%s",format);
-            va_list args;
-            va_start(args, format);
-            char* x = Printf(buffer+currentLen,buffer+maxlLen,format,args);
-            va_end(args);
-            currentLen = x-buffer;
+            buffer[currentLen]=' ';
+            buffer[currentLen+1]=0;
+            currentLen++;
         }
-        void PreAllocString::AddWhiteSpace()
-        {
-            //printf("Adding Whitespace...\n");
-            if(currentLen+1<maxlLen)
-            {
-                buffer[currentLen]=' ';
-                buffer[currentLen+1]=0;
-                currentLen++;
-            }
-        }
+    }
 
