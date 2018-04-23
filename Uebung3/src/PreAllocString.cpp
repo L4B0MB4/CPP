@@ -61,6 +61,7 @@
 
     PreAllocString& PreAllocString::operator =(char *const rhs)
     {
+        if(!rhs)return (*this);
         if(maxlLen>0 && rhs)
         {
            unsigned int i=0;
@@ -89,6 +90,7 @@
     PreAllocString& PreAllocString::operator +=(char const* rhs)
     {
         //printf("+= string %s",rhs);
+        if(!rhs)return(*this);
         unsigned int i=0;
         for(i=0;i+currentLen<maxlLen;i++)
         {
