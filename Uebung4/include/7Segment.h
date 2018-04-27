@@ -2,16 +2,16 @@
 #include "PreAllocString.h"
 #include <stdarg.h>
 
+template <typename ... Args>
 class MultiDigit {
 
 public:
-	template<typename ... Args>
 	constexpr MultiDigit(Args ... args)
 	{
 		test(args...);
 	}
-	template<typename T, typename ... Args>
-	constexpr T test(T first, Args ... args)
+	template<typename T, typename ... PArgs>
+	constexpr T test(T first, PArgs ... args)
 	{
 		//printf("hiiier %d \n",first);
 		test(args...);
@@ -21,6 +21,11 @@ public:
 	constexpr T test(T first) {
 		return first;
 		//printf("hiiier %d \n",first);
+	}
+
+	 operator const char *()  const
+	{
+		return nullptr;
 	}
 
 };
