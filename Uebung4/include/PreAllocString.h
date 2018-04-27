@@ -7,28 +7,27 @@
 #include "Printf.h"
 
 template<size_t _Template_Size>
-struct PreAllocString
+class PreAllocString
 {
+public:
     constexpr PreAllocString()
     : currentLen{0}
     {
     }
-
+    
      operator const char*() const{
         return buffer;
     }
 
-    operator const void*() const{
+     operator const void*() const{
         return reinterpret_cast<void *>(buffer);
     }
 
-    size_t GetLength() const
+     size_t GetLength() const
     {
         return currentLen;
     }
-
-
-    const char & operator [] (const int idx)
+     const char & operator [] (const int idx)
     {
         unsigned int id  = static_cast<unsigned int>(idx);
         if(id<=maxLen) 
@@ -38,7 +37,7 @@ struct PreAllocString
         return buffer[0];
     }
     
-    PreAllocString& operator =(char rhs)
+     PreAllocString& operator =(char rhs)
     {
         if(maxLen>0)
         {
@@ -57,7 +56,7 @@ struct PreAllocString
         return *this;
     }
 
-    PreAllocString& operator =(const char* rhs)
+     PreAllocString& operator =(const char* rhs)
     {
         //printf("is string %s \n",rhs);
         if(!rhs)return *this;
@@ -72,7 +71,7 @@ struct PreAllocString
         return *this;
     }
 
-    PreAllocString& operator =(char *const rhs)
+     PreAllocString& operator =(char *const rhs)
     {
         if(!rhs)return *this;
         if(maxLen>0 && rhs)
@@ -88,7 +87,7 @@ struct PreAllocString
         return *this;
     }
 
-    PreAllocString& operator +=(char rhs)
+     PreAllocString& operator +=(char rhs)
     {
         //printf("+= char %c",rhs);
         if(currentLen+1<maxLen)
@@ -100,9 +99,9 @@ struct PreAllocString
         return *this;
     }
 
-    PreAllocString& operator +=(char const* rhs)
+     PreAllocString& operator +=(char const* rhs)
     {
-        printf("+= string %s",rhs);
+        //printf("+= string %s",rhs);
         if(!rhs)return*this;
         unsigned int i=0;
         for(i=0;i+currentLen<maxLen;i++)
@@ -114,13 +113,13 @@ struct PreAllocString
         return *this;
     }
 
-    void Empty()
+     void Empty()
     {
         buffer[0]=0;
         currentLen=0;
     }
 
-    void AddFormat(const char* format,...)
+     void AddFormat(const char* format,...)
     {
         //printf("Formatting...\n%s",format);
         va_list args;
@@ -129,7 +128,7 @@ struct PreAllocString
         va_end(args);
         currentLen = x-buffer;
     }
-    void AddWhiteSpace()
+     void AddWhiteSpace()
     {
         //printf("Adding Whitespace...\n");
         if(currentLen+1<maxLen)
@@ -141,7 +140,7 @@ struct PreAllocString
     }
 
 private:
-    char   buffer[_Template_Size];
+    char buffer[_Template_Size];
     size_t currentLen;
     size_t maxLen =_Template_Size;
 };

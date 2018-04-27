@@ -1,31 +1,133 @@
 #include <iostream>
 #include "PreAllocString.h"
 #include <stdarg.h>
+#define MAX_DIGITS 10
+const int array[MAX_DIGITS][7]={{1,1,1,0,1,1,1},{0,0,1,0,0,1,0},{1,0,1,1,1,0,1},{1,0,1,1,0,1,1},{0,1,1,1,0,1,0},{1,1,0,1,0,1,1},{1,1,0,1,1,1,1},{1,0,1,0,0,1,0},{1,1,1,1,1,1,1},{1,1,1,1,0,1,1},};
 
 template <typename ... Args>
 class MultiDigit {
 
 public:
-	constexpr MultiDigit(Args ... args)
+	MultiDigit(Args ... args)
 	{
 		test(args...);
+		nrArgs = sizeof ...(args);
+		printf("number of arguments %d\n",nrArgs);
+		string="";
+		for(lH=0;lH<5;lH++)
+		{
+			test(args...);
+			string+="\n";
+		}
 	}
 	template<typename T, typename ... PArgs>
-	constexpr T test(T first, PArgs ... args)
+	T test(T first, PArgs ... args)
 	{
-		//printf("hiiier %d \n",first);
+		const int number = static_cast<int>(first);
+		if(number>9)string+="   ";
+		else printLine(number,lH);
 		test(args...);
 		return first;
 	}
 	template<typename T>
-	constexpr T test(T first) {
+	T test(T first) {
+		const int number = static_cast<int>(first);
+		if(number>9)string+="   ";
+		else printLine(number,lH);
 		return first;
-		//printf("hiiier %d \n",first);
 	}
+
+	void printLine(int number, int lineHeight)
+	{
+		if(lineHeight%5==0)
+		{
+			switch(number)
+			{
+				case 1: 
+					string+="   ";
+				break;
+				default: 
+					string+="\033[4m _ \033[0m";
+				break;
+			}
+		}
+		if(lineHeight%5==1)
+		{
+			switch(number)
+			{
+				case 0:
+				case 4:
+				case 8:
+				case 9:
+					string+="| |";
+				break;
+				case 1:
+				case 2:
+				case 3:
+				case 7:
+					string+="  |";
+				break;
+				default:
+					string+="|  ";
+			}
+		}
+		if(lineHeight%5==2)
+		{
+			switch(number)
+			{
+				case 0:
+				case 1:
+				case 7: 
+					string+="   ";
+				break;
+				default: 
+					string+="\033[4m _ \033[0m";
+				break;
+			}
+		}
+		if(lineHeight%5==3)
+		{
+			switch(number)
+			{
+				case 0:
+				case 6:
+				case 8:
+					string+="| |";
+				break;
+				case 2:
+					string+="|  ";
+				break;
+				default:
+					string+="  |";
+			}
+		}
+		if(lineHeight%5==4)
+		{
+			switch(number)
+			{
+				case 1:
+				case 4:
+				case 7:
+					string+="   ";
+				break;
+				default: 
+					string+=" \u203E ";
+				break;
+			}
+		}
+		string +=" ";
+		
+	}
+
+
 
 	 operator const char *()  const
 	{
-		return nullptr;
+		return static_cast<const char *>(string);
 	}
 
+private:
+	PreAllocString<1000>string;
+	int nrArgs =0;
+	int lH=0;
 };
