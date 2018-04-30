@@ -2,7 +2,6 @@
 #include "PreAllocString.h"
 #include <stdarg.h>
 #define MAX_DIGITS 10
-const int array[MAX_DIGITS][7]={{1,1,1,0,1,1,1},{0,0,1,0,0,1,0},{1,0,1,1,1,0,1},{1,0,1,1,0,1,1},{0,1,1,1,0,1,0},{1,1,0,1,0,1,1},{1,1,0,1,1,1,1},{1,0,1,0,0,1,0},{1,1,1,1,1,1,1},{1,1,1,1,0,1,1},};
 
 template <typename ... Args>
 class MultiDigit {
@@ -10,27 +9,27 @@ class MultiDigit {
 public:
 	MultiDigit(Args ... args)
 	{
-		test(args...);
+		goThroughParams(args...);
 		nrArgs = sizeof ...(args);
 		printf("number of arguments %d\n",nrArgs);
 		string="";
 		for(lH=0;lH<5;lH++)
 		{
-			test(args...);
+			goThroughParams(args...);
 			string+="\n";
 		}
 	}
 	template<typename T, typename ... PArgs>
-	T test(T first, PArgs ... args)
+	T goThroughParams(T first, PArgs ... args)
 	{
 		const int number = static_cast<int>(first);
 		if(number>9)string+="   ";
 		else printLine(number,lH);
-		test(args...);
+		goThroughParams(args...);
 		return first;
 	}
 	template<typename T>
-	T test(T first) {
+	T goThroughParams(T first) {
 		const int number = static_cast<int>(first);
 		if(number>9)string+="   ";
 		else printLine(number,lH);
