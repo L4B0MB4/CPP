@@ -9,7 +9,6 @@ class MultiDigit {
 public:
 	constexpr MultiDigit(Args ... args)
 	{
-		nrArgs = sizeof ...(args);
 		string.Empty();
 		for(lH=0;lH<5;lH++)
 		{
@@ -44,7 +43,7 @@ public:
 					string+="   ";
 				break;
 				default: 
-					string+="\033[4m _ \033[0m";
+					string+=" \u2501 ";
 				break;
 			}
 		}
@@ -56,16 +55,16 @@ public:
 				case 4:
 				case 8:
 				case 9:
-					string+="| |";
+					string+="\u2503 \u2503";
 				break;
 				case 1:
 				case 2:
 				case 3:
 				case 7:
-					string+="  |";
+					string+="  \u2503";
 				break;
 				default:
-					string+="|  ";
+					string+="\u2503  ";
 			}
 		}
 		if(lineHeight%5==2)
@@ -78,7 +77,7 @@ public:
 					string+="   ";
 				break;
 				default: 
-					string+="\033[4m _ \033[0m";
+					string+=" \u2501 ";
 				break;
 			}
 		}
@@ -89,13 +88,13 @@ public:
 				case 0:
 				case 6:
 				case 8:
-					string+="| |";
+					string+="\u2503 \u2503";
 				break;
 				case 2:
-					string+="|  ";
+					string+="\u2503  ";
 				break;
 				default:
-					string+="  |";
+					string+="  \u2503";
 			}
 		}
 		if(lineHeight%5==4)
@@ -108,7 +107,7 @@ public:
 					string+="   ";
 				break;
 				default: 
-					string+=" \u203E ";
+					string+=" \u2501 ";
 				break;
 			}
 		}
@@ -124,7 +123,7 @@ public:
 	}
 
 private:
-	PreAllocString<1000>string;
+	PreAllocString<sizeof ...(Args) *40>string;
 	int nrArgs =0;
 	int lH=0;
 };
