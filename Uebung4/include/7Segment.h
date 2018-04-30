@@ -1,7 +1,8 @@
 #include <iostream>
 #include "PreAllocString.h"
 #include <stdarg.h>
-#define MAX_DIGITS 10
+#define BIGGEST_DIGIT 9
+#define LINES 5
 
 template <typename ... Args>
 class MultiDigit {
@@ -10,7 +11,7 @@ public:
 	constexpr MultiDigit(Args ... args)
 	{
 		string.Empty();
-		for(lH=0;lH<5;lH++)
+		for(lH=0;lH<LINES;lH++)
 		{
 			goThroughParams(args...);
 			string+="\n";
@@ -20,7 +21,7 @@ public:
 	constexpr T goThroughParams(T first, PArgs ... args)
 	{
 		int number = static_cast<int>(first);
-		if(number>9)string+="   ";
+		if(number>BIGGEST_DIGIT)string+="   ";
 		else printLine(number,lH);
 		goThroughParams(args...);
 		return first;
@@ -28,7 +29,7 @@ public:
 	template<typename T>
 	constexpr T goThroughParams(T first) {
 		int number = static_cast<int>(first);
-		if(number>9)string+="   ";
+		if(number>BIGGEST_DIGIT)string+="   ";
 		else printLine(number,lH);
 		return first;
 	}
@@ -43,11 +44,11 @@ public:
 					string+="   ";
 				break;
 				default: 
-					string+=" \u2501 ";
+					string+=" - ";
 				break;
 			}
 		}
-		if(lineHeight%5==1)
+		else if(lineHeight%5==1)
 		{
 			switch(number)
 			{
@@ -55,19 +56,19 @@ public:
 				case 4:
 				case 8:
 				case 9:
-					string+="\u2503 \u2503";
+					string+="| |";
 				break;
 				case 1:
 				case 2:
 				case 3:
 				case 7:
-					string+="  \u2503";
+					string+="  |";
 				break;
 				default:
-					string+="\u2503  ";
+					string+="|  ";
 			}
 		}
-		if(lineHeight%5==2)
+		else if(lineHeight%5==2)
 		{
 			switch(number)
 			{
@@ -77,27 +78,27 @@ public:
 					string+="   ";
 				break;
 				default: 
-					string+=" \u2501 ";
+					string+=" - ";
 				break;
 			}
 		}
-		if(lineHeight%5==3)
+		else if(lineHeight%5==3)
 		{
 			switch(number)
 			{
 				case 0:
 				case 6:
 				case 8:
-					string+="\u2503 \u2503";
+					string+="| |";
 				break;
 				case 2:
-					string+="\u2503  ";
+					string+="|  ";
 				break;
 				default:
-					string+="  \u2503";
+					string+="  |";
 			}
 		}
-		if(lineHeight%5==4)
+		else if(lineHeight%5==4)
 		{
 			switch(number)
 			{
@@ -107,7 +108,7 @@ public:
 					string+="   ";
 				break;
 				default: 
-					string+=" \u2501 ";
+					string+=" - ";
 				break;
 			}
 		}
@@ -123,7 +124,6 @@ public:
 	}
 
 private:
-	PreAllocString<sizeof ...(Args) *40>string;
-	int nrArgs =0;
+	PreAllocString<sizeof ...(Args) *21>string;
 	int lH=0;
 };
