@@ -113,7 +113,7 @@ public:
         return *this;
     }
 
-     void Empty()
+    constexpr void Empty()
     {
         buffer[0]=0;
         currentLen=0;

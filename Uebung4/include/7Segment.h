@@ -9,10 +9,8 @@ class MultiDigit {
 public:
 	constexpr MultiDigit(Args ... args)
 	{
-		goThroughParams(args...);
 		nrArgs = sizeof ...(args);
-		//printf("number of arguments %d\n",nrArgs);
-		string="";
+		string.Empty();
 		for(lH=0;lH<5;lH++)
 		{
 			goThroughParams(args...);
