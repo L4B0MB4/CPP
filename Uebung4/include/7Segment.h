@@ -7,11 +7,11 @@ template <typename ... Args>
 class MultiDigit {
 
 public:
-	MultiDigit(Args ... args)
+	constexpr MultiDigit(Args ... args)
 	{
 		goThroughParams(args...);
 		nrArgs = sizeof ...(args);
-		printf("number of arguments %d\n",nrArgs);
+		//printf("number of arguments %d\n",nrArgs);
 		string="";
 		for(lH=0;lH<5;lH++)
 		{
@@ -20,23 +20,23 @@ public:
 		}
 	}
 	template<typename T, typename ... PArgs>
-	T goThroughParams(T first, PArgs ... args)
+	constexpr T goThroughParams(T first, PArgs ... args)
 	{
-		const int number = static_cast<int>(first);
+		int number = static_cast<int>(first);
 		if(number>9)string+="   ";
 		else printLine(number,lH);
 		goThroughParams(args...);
 		return first;
 	}
 	template<typename T>
-	T goThroughParams(T first) {
-		const int number = static_cast<int>(first);
+	constexpr T goThroughParams(T first) {
+		int number = static_cast<int>(first);
 		if(number>9)string+="   ";
 		else printLine(number,lH);
 		return first;
 	}
 
-	void printLine(int number, int lineHeight)
+	constexpr void printLine(int number, int lineHeight)
 	{
 		if(lineHeight%5==0)
 		{
@@ -117,7 +117,7 @@ public:
 		string +=" ";
 		
 	}
-
+	
 
 
 	 operator const char *()  const

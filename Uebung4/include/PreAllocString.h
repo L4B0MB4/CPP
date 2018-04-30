@@ -11,7 +11,7 @@ class PreAllocString
 {
 public:
     constexpr PreAllocString()
-    : currentLen{0}
+    : buffer{}, currentLen{0}
     {
     }
     
@@ -37,7 +37,7 @@ public:
         return buffer[0];
     }
     
-     PreAllocString& operator =(char rhs)
+     constexpr PreAllocString& operator =(char rhs)
     {
         if(maxLen>0)
         {
@@ -56,7 +56,7 @@ public:
         return *this;
     }
 
-     PreAllocString& operator =(const char* rhs)
+     constexpr PreAllocString& operator =(const char* rhs)
     {
         //printf("is string %s \n",rhs);
         if(!rhs)return *this;
@@ -71,7 +71,7 @@ public:
         return *this;
     }
 
-     PreAllocString& operator =(char *const rhs)
+     constexpr PreAllocString& operator =(char *const rhs)
     {
         if(!rhs)return *this;
         if(maxLen>0 && rhs)
@@ -87,7 +87,7 @@ public:
         return *this;
     }
 
-     PreAllocString& operator +=(char rhs)
+    constexpr PreAllocString& operator +=(char rhs)
     {
         //printf("+= char %c",rhs);
         if(currentLen+1<maxLen)
@@ -99,7 +99,7 @@ public:
         return *this;
     }
 
-     PreAllocString& operator +=(char const* rhs)
+    constexpr PreAllocString& operator +=(char const* rhs)
     {
         //printf("+= string %s",rhs);
         if(!rhs)return*this;
